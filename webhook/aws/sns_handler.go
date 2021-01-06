@@ -198,6 +198,9 @@ func (ss *SNSServer) SubscribeConfirmHandle(rw http.ResponseWriter, req *http.Re
 		Token:    aws.String(msg.Token),    // Required
 		TopicArn: aws.String(msg.TopicArn), // Required
 	}
+
+	ss.errorLog.Log(logging.MessageKey(), "SNS", "params", params)
+
 	resp, err := ss.SVC.ConfirmSubscription(params)
 	if err != nil {
 		ss.errorLog.Log(logging.MessageKey(), "SNS confirm error", logging.ErrorKey(), err)
